@@ -1,0 +1,51 @@
+name: 5 state busy beaver from http://en.wikipedia.org/wiki/Busy_beaver
+short_description: a state table for 5 state, 2 symbol busy beaver
+long_description: 'A "busy beaver" is a Turing program that attains the maximum "operational busyness" and must eventually halt. See https://en.wikipedia.org/wiki/Turing_machine'
+
+initial_state: a
+state_table:
+    a:
+        0:
+            write_symbol: 1
+            move_tape: 1
+            next_state: b
+        1:
+            write_symbol: 1
+            move_tape: -1
+            next_state: c
+    b:
+        0:
+            write_symbol: 1
+            move_tape: 1
+            next_state: c
+        1:
+            write_symbol: 1
+            move_tape: 1
+            next_state: b
+    c:
+        0:
+            write_symbol: 1
+            move_tape: 1
+            next_state: d
+        1:
+            write_symbol: 0
+            move_tape: -1
+            next_state: e
+    d:
+        0:
+            write_symbol: 1
+            move_tape: -1
+            next_state: a
+        1:
+            write_symbol: 1
+            move_tape: -1
+            next_state: d
+    e:
+        0:
+            write_symbol: 1
+            move_tape: 1
+            next_state: halt
+        1:
+            write_symbol: 0
+            move_tape: -1
+            next_state: a
