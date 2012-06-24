@@ -1,0 +1,139 @@
+name: subtract
+short_description: subtract two binary numbers
+long_description: 'two binary numbers separated by an underscore. See http://www.aturingmachine.com/examplesSub.php'
+
+initial_state: 0
+
+empty_symbol: _
+
+state_table:
+    0:
+        0:
+            comment: finds right edge of first number
+            next_state: 0
+            write_symbol: 0
+            move_tape: 1
+        1:
+            next_state: 0
+            write_symbol: 1
+            move_tape: 1
+        _:
+            next_state: 1
+            write_symbol: _
+            move_tape: 1
+    1:
+        0:
+            comment: finds right edge of second number
+            next_state: 1
+            write_symbol: 0
+            move_tape: 1
+        1:
+            next_state: 1
+            write_symbol: 1
+            move_tape: 1
+        _:
+            next_state: 2
+            write_symbol: _
+            move_tape: -1
+    2:
+        0:
+            comment: if a 0 keep looking for a 1
+            next_state: 2
+            write_symbol: 0
+            move_tape: -1
+        1:
+            comment: removed right most 1 from right number
+            next_state: 3
+            write_symbol: 0
+            move_tape: -1
+        _:
+            comment: if we find a blank before a 1, then erase 0s
+            next_state: 5
+            write_symbol: _
+            move_tape: 1
+    3:
+        0:
+            comment: move to left number
+            next_state: 3
+            write_symbol: 0
+            move_tape: -1
+        1:
+            next_state: 3
+            write_symbol: 1
+            move_tape: -1
+        _:
+            next_state: 8
+            write_symbol: _
+            move_tape: -1
+    4:
+        0:
+            comment: finds right edge of first number
+            next_state: 4
+            write_symbol: 0
+            move_tape: 1
+        1:
+            next_state: 4
+            write_symbol: 1
+            move_tape: 1
+        _:
+            next_state: 5
+            write_symbol: _
+            move_tape: 1
+    5:
+        0:
+            comment: finds right edge of second number
+            next_state: 5
+            write_symbol: 0
+            move_tape: 1
+        1:
+            next_state: 5
+            write_symbol: 1
+            move_tape: 1
+        _:
+            next_state: 6
+            write_symbol: _
+            move_tape: -1
+    6:
+        0:
+            comment: removed 0 from right number
+            next_state: 6
+            write_symbol: _
+            move_tape: -1
+        1:
+            next_state: 6
+            write_symbol: 1
+            move_tape: -1
+        _:
+            next_state: 7
+            write_symbol: _
+            move_tape: -1
+    7:
+        0:
+            comment: removes 0 from left number
+            next_state: 7
+            write_symbol: _
+            move_tape: -1
+        1:
+            next_state: 7
+            write_symbol: 1
+            move_tape: -1
+        _:
+            next_state: halt
+            write_symbol: _
+            move_tape: 1
+    8:
+        0:
+            comment: move left looking for a 1 to change to a 0
+            next_state: 8
+            write_symbol: 0
+            move_tape: -1
+        1:
+            comment: if a 1 is found, change to zero and loop again
+            next_state: 0
+            write_symbol: 0
+            move_tape: 1
+        _:
+            comment: if blank then all done, then erase 0s
+            next_state: 4
+            write_symbol: _
+            move_tape: 1
