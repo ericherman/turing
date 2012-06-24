@@ -5,17 +5,20 @@ use warnings;
 
 sub new {
     my $class = shift;
-    my ( $table, $state, $blank_symbol ) = @_;
+    my ( $table, $state, $blank_symbol, $tape ) = @_;
     my $self = {};
     bless $self, $class;
 
     $self->{table}          = $table;
     $self->{state}          = $state;
     $self->{blank}          = $blank_symbol;
-    $self->{tape}           = {};       # tape_position => contents
+    $self->{tape}           = $tape;           # tape_position => contents
     $self->{tape_position}  = 0;
     $self->{count}          = 0;
     $self->{scanned_symbol} = undef;
+
+    $self->{tape}  //= {};
+    $self->{blank} //= 0;
 
     return $self;
 }

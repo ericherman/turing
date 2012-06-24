@@ -34,13 +34,29 @@ my $short_desc    = $yaml->{short_description};
 my $long_desc     = $yaml->{long_description};
 my $blank         = $yaml->{empty_symbol};
 
+my $tape = {};
+my $tapefile;
+if ( 1 < scalar @ARGV ) {
+    $tapefile = $ARGV[1];
+    if ($tapefile) {
+        open( my $FILE, '<', $tapefile );
+        my @lines = <$FILE>;
+        close($FILE);
+        my $pos = 0;
+        foreach my $line (@lines) {
+            chomp $line;
+            $tape->{ $pos++ } = $line;
+        }
+    }
+}
+
+my $turing_machine = new TuringMachine( $table, $initial_state, $blank, $tape );
+
 print "$name\n\n";
 print "$short_desc\n\n";
 if ($verbose) {
     print "$long_desc\n\n";
 }
-
-my $turing_machine = new TuringMachine( $table, $initial_state, $blank );
 
 if ($verbose) {
     $turing_machine->set_bfunc(
@@ -57,7 +73,6 @@ if ($verbose) {
 $turing_machine->go();
 
 print "\nfinal state:\noperations: ", $turing_machine->peek(), "\n";
-
 
 print "\nfinal tape:\n";
 $turing_machine->for_each_tape_entry(
@@ -76,7 +91,7 @@ turing-machine.pl - reads turing descriptions in YAML format
 
 =head1 SYNOPSIS
 
-turing-machien.pl [options] yamlfilename
+turing-machien.pl [options] yamlfilename [tapefile]
 
     Options:
         -help        brief help message
@@ -99,6 +114,7 @@ prints more stuff.
 =head1 DESCRIPTION
 
 B<This program> will read the given input YAML file and execute the
-table assuming a blank, infinite strip.
+table. If a tapefile is not profived, it will assume a blank, infinite
+strip.
 
 =cut
