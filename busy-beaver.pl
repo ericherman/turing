@@ -5,6 +5,8 @@ use warnings;
 
 use YAML qw( LoadFile );
 
+use TuringMachine;
+
 # a perl implementation of the "busy beaver" described at
 # https://en.wikipedia.org/wiki/Turing_machine
 
@@ -14,26 +16,23 @@ $| = 1;
 # State table for 3 state, 2 symbol busy beaver
 my $table = LoadFile("busy-beaver.yaml");
 
-my $tape          = {};    # tape_position => contents
-my $tape_position = 0;
-my $state         = 'a';
-my $scanned_symbol;
+my $turing_machine = new TuringMachine( $table, 'a' );
 
-my $count = 0;
-while ( $state ne 'halt' ) {
-    my @positions = sort { $a <=> $b } keys %$tape;
-    my $display = join( ', ', @positions );
-    my $length = scalar @positions;
-    printf( "%2d  state: %s, length: %2d, position: %2d, written to: %s\n",
-        $count, $state, $length, $tape_position, $display );
+$turing_machine->set_bfunc(
+    sub {
+        my $turing_machine = shift;
+        print $turing_machine->peek(), "\n";
+    }
+);
 
-    $count++;
-    $tape->{$tape_position} //= 0;
+$turing_machine->go();
+$turing_machine->bfunc();
 
-    $scanned_symbol = $tape->{$tape_position};
-    $tape->{$tape_position} =
-      $table->{$state}->{$scanned_symbol}->{write_symbol};
-    $tape_position += $table->{$state}->{$scanned_symbol}->{move_tape};
-    $state = $table->{$state}->{$scanned_symbol}->{next_state};
-}
+$turing_machine->for_each_tape_entry(
+    sub {
+        my ( $position, $contents ) = @_;
+
+        printf( "%3d: %s\n", $position, $contents );
+    }
+);
 
