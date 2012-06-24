@@ -1,0 +1,71 @@
+name: hello world
+short_description: ''
+long_description: ''
+
+initial_state: a
+state_table:
+    a:
+        0:
+            write_symbol: h
+            move_tape: 1
+            next_state: b
+    b:
+        0:
+            write_symbol: e
+            move_tape: 1
+            next_state: c
+    c:
+        0:
+            write_symbol: l
+            move_tape: 1
+            next_state: d
+    d:
+        0:
+            write_symbol: l
+            move_tape: 1
+            next_state: e
+    e:
+        0:
+            write_symbol: o
+            move_tape: 1
+            next_state: f
+    f:
+        0:
+            write_symbol: ','
+            move_tape: 1
+            next_state: g
+    g:
+        0:
+            write_symbol: ' '
+            move_tape: 1
+            next_state: h
+    h:
+        0:
+            write_symbol: w
+            move_tape: 1
+            next_state: i
+    i:
+        0:
+            write_symbol: o
+            move_tape: 1
+            next_state: j
+    j:
+        0:
+            write_symbol: r
+            move_tape: 1
+            next_state: k
+    k:
+        0:
+            write_symbol: l
+            move_tape: 1
+            next_state: l
+    l:
+        0:
+            write_symbol: d
+            move_tape: 1
+            next_state: m
+    m:
+        0:
+            write_symbol: '.'
+            move_tape: 1
+            next_state: halt
