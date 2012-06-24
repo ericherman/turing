@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 
+use YAML qw( LoadFile );
+
 # a perl implementation of the "busy beaver" described at
 # https://en.wikipedia.org/wiki/Turing_machine
 
@@ -10,44 +12,7 @@ use warnings;
 $| = 1;
 
 # State table for 3 state, 2 symbol busy beaver
-my $table = {
-    a => {
-        0 => {
-            write_symbol => 1,
-            move_tape    => 1,
-            next_state   => 'b',
-        },
-        1 => {
-            write_symbol => 1,
-            move_tape    => -1,
-            next_state   => 'c',
-        },
-    },
-    b => {
-        0 => {
-            write_symbol => 1,
-            move_tape    => -1,
-            next_state   => 'a',
-        },
-        1 => {
-            write_symbol => 1,
-            move_tape    => 1,
-            next_state   => 'b',
-        },
-    },
-    c => {
-        0 => {
-            write_symbol => 1,
-            move_tape    => -1,
-            next_state   => 'b',
-        },
-        1 => {
-            write_symbol => 1,
-            move_tape    => -1,
-            next_state   => 'halt',
-        },
-    },
-};
+my $table = LoadFile("busy-beaver.yaml");
 
 my $tape          = {};    # tape_position => contents
 my $tape_position = 0;

@@ -1,0 +1,27 @@
+a:
+    0:
+        write_symbol: 1
+        move_tape: 1
+        next_state: b
+    1:
+        write_symbol: 1
+        move_tape: -1
+        next_state: c
+b:
+    0:
+        write_symbol: 1
+        move_tape: -1
+        next_state: a
+    1:
+        write_symbol: 1
+        move_tape: 1
+        next_state: b
+c:
+    0:
+        write_symbol: 1
+        move_tape: -1
+        next_state: b
+    1:
+        write_symbol: 1
+        move_tape: -1
+        next_state: halt
