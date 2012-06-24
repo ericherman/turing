@@ -32,6 +32,7 @@ my $initial_state = $yaml->{initial_state};
 my $name          = $yaml->{name};
 my $short_desc    = $yaml->{short_description};
 my $long_desc     = $yaml->{long_description};
+my $blank         = $yaml->{empty_symbol};
 
 print "$name\n\n";
 print "$short_desc\n\n";
@@ -39,7 +40,7 @@ if ($verbose) {
     print "$long_desc\n\n";
 }
 
-my $turing_machine = new TuringMachine( $table, $initial_state );
+my $turing_machine = new TuringMachine( $table, $initial_state, $blank );
 
 if ($verbose) {
     $turing_machine->set_bfunc(

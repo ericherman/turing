@@ -5,12 +5,13 @@ use warnings;
 
 sub new {
     my $class = shift;
-    my ( $table, $state ) = @_;
+    my ( $table, $state, $blank_symbol ) = @_;
     my $self = {};
     bless $self, $class;
 
     $self->{table}          = $table;
     $self->{state}          = $state;
+    $self->{blank}          = $blank_symbol;
     $self->{tape}           = {};       # tape_position => contents
     $self->{tape_position}  = 0;
     $self->{count}          = 0;
@@ -26,7 +27,7 @@ sub go {
         $self->bfunc();
 
         $self->{count}++;
-        $self->{tape}{ $self->{tape_position} } //= 0;
+        $self->{tape}{ $self->{tape_position} } //= $self->{blank};
         $self->{scanned_symbol} = $self->{tape}{ $self->{tape_position} };
 
         my $t = $self->{table}{ $self->{state} }{ $self->{scanned_symbol} };

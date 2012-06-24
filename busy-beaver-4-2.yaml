@@ -3,6 +3,7 @@ short_description: a state table for 4 state, 2 symbol busy beaver
 long_description: 'A "busy beaver" is a Turing program that attains the maximum "operational busyness" and must eventually halt. See https://en.wikipedia.org/wiki/Turing_machine'
 
 initial_state: a
+empty_symbol: 0
 state_table:
     a:
         0:
